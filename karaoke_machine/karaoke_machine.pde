@@ -1,83 +1,68 @@
+import processing.core.PApplet;
 import processing.sound.*;
 import java.util.Map;
 import java.util.HashMap;
 
+static final int BANDS = 2048;
+
 Map<Float, String> frequencyTable;
-int bands;
-float[] spectrum;
-FFT fft;
-AudioIn in;
+Microphone mic;
+Song song;
 
 void setup() {
   size(512, 360);
-  background(255);
-  frameRate(30);
+  frameRate(10);
   
-  frequencyTable = new HashMap<Float, String>();
-  generateFrequencyTable();
-  
-  bands = 2048;
-  spectrum = new float[bands];
-  fft = new FFT(this, bands);
-  in = new AudioIn(this, 0);
-
-  in.start();
-  fft.input(in);
-}      
+  frequencyTable = generateFrequencyTable();
+  mic = new Microphone(this);
+  song = new Song(this, "baby_cat.mp3", "baby_cat.mp3");
+  mic.in.start();
+  //song.melody.play(1, 1);
+}
 
 void draw() {
   background(255);
-  fft.analyze(spectrum);
-  float frequency = indexOfMax(spectrum) * 44100 / bands / 2;
-  print(frequency + " ");
-  println(findClosestNote(frequency));
-
-  for (int i = 0; i < bands; i++) {
-    line(i, height, i, height - spectrum[i] * height * 10);
+  
+  for (int i = 0; i < width; i++) {
+    line(i, height, i, height - mic.spectrum[i] * height * 10);
   }
+  
+  println(mic.getFrequency() + " " + mic.findClosestNote());
 }
 
-void generateFrequencyTable() {
+/*
+* Returns a hashmap of frequencies to the corresponding pitches.
+*/
+Map<Float, String> generateFrequencyTable() {
+  Map<Float, String> table = new HashMap<Float, String>();
   BufferedReader reader = createReader("freq_to_note.txt");
   String line;
-
+  
   try {
     while ((line = reader.readLine()) != null) {
       String[] pieces = split(line, ",");
       String note = pieces[0];
       float freq = float(pieces[1]);
-      frequencyTable.put(freq, note);
+      table.put(freq, note);
     }
-  } 
-  catch (IOException e) {
-  }
+  } catch (IOException e) {}
+  
+  return table;
 }
 
-int indexOfMax(float[] vals) {
+/*
+* Returns the index of the max value in an array of floats.
+*/
+int argMax(float[] vals) {
   int maxIndex = 0;
   float max = 0;
-
+  
   for (int i = 0; i < vals.length; i++) {
     if (vals[i] > max) {
       maxIndex = i;
       max = vals[i];
     }
   }
-
+  
   return maxIndex;
-}
-
-String findClosestNote(float frequency) {
-  float distance;
-  float closestFrequency = 0;
-  float minDistance = Float.POSITIVE_INFINITY;
-
-  for (float key : frequencyTable.keySet()) {
-    if ((distance = abs(frequency - key)) < minDistance) {
-      minDistance = distance;
-      closestFrequency = key;
-    }
-  }
-
-  return frequencyTable.get(closestFrequency);
 }
