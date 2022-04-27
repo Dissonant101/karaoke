@@ -1,5 +1,6 @@
 import processing.core.PApplet;
 import processing.sound.*;
+import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -16,8 +17,8 @@ void setup() {
   frequencyTable = generateFrequencyTable();
   mic = new Microphone(this);
   song = new Song(this, "baby_cat.mp3", "baby_cat.mp3");
-  mic.in.start();
-  //song.melody.play(1, 1);
+  mic.start();
+  song.start();
 }
 
 void draw() {
@@ -27,7 +28,9 @@ void draw() {
     line(i, height, i, height - mic.spectrum[i] * height * 10);
   }
   
-  println(mic.getFrequency() + " " + mic.findClosestNote());
+  println(mic.getFrequency() + " " + song.getFrequency());
+  println("Match: " + song.compare(mic) + "%");
+  println(song.isPlaying());
 }
 
 /*
