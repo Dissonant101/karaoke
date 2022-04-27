@@ -16,7 +16,7 @@ void setup() {
   
   frequencyTable = generateFrequencyTable();
   mic = new Microphone(this);
-  song = new Song(this, "baby_cat.mp3", "baby_cat.mp3");
+  song = new Song(this, "Little Lamb Melody.wav", "Little Lamb Accompaniment.wav");
   mic.start();
   song.start();
 }
