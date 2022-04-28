@@ -5,6 +5,11 @@ import java.util.HashMap;
 
 static final int BANDS = 2048;
 
+PImage img;
+String[] pics = {"MR_S_ARMUP.png","MR_S_ARMMID.png","MR_S_ARMDOWN.png","MR_S_ARMMID.png"};
+int currentPic = 0;
+int bpm = 85;
+
 Map<Float, String> frequencyTable;
 Microphone mic;
 Song song;
@@ -13,21 +18,23 @@ void setup() {
   size(512, 360);
   frameRate(10);
   
+  img = loadImage(pics[currentPic]);
+  
   frequencyTable = generateFrequencyTable();
   mic = new Microphone(this);
   song = new Song(this, "baby_cat.mp3", "baby_cat.mp3");
   mic.in.start();
-  //song.melody.play(1, 1);
+  song.melody.play(1, 1);
 }
 
 void draw() {
-  background(255);
+  changeBackground();
   
   for (int i = 0; i < width; i++) {
     line(i, height, i, height - mic.spectrum[i] * height * 10);
   }
   
-  println(mic.getFrequency() + " " + mic.findClosestNote());
+  //println(mic.getFrequency() + " " + mic.findClosestNote());
 }
 
 /*
@@ -65,4 +72,17 @@ int argMax(float[] vals) {
   }
   
   return maxIndex;
+}
+
+/*
+* Detremines when to change the background image
+*/
+void changeBackground() {
+   background(img);
+   int changesPerMin = round(frameRate*60/bpm);
+
+   if(frameCount % changesPerMin == 0) {
+     currentPic ++;
+     img = loadImage(pics[currentPic%4]); 
+   }
 }
