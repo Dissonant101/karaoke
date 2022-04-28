@@ -9,28 +9,49 @@ static final int BANDS = 2048;
 Map<Float, String> frequencyTable;
 Microphone mic;
 Song song;
+String micNote, songNote;
+float micFrequency, songFrequency;
+int accuracy;
+PImage[] backgrounds;
 
 void setup() {
-  size(512, 360);
-  frameRate(10);
+  size(512, 360); // 512x360, 1021x763
+  textSize(24);
+  textAlign(LEFT);
+  fill(0);
+  frameRate(30);
   
   frequencyTable = generateFrequencyTable();
   mic = new Microphone(this);
-  song = new Song(this, "Little Lamb Melody.wav", "Little Lamb Accompaniment.wav");
+  song = new Song(this, "440_hz.wav", "440_hz.wav");
+  backgrounds = new PImage[4];
+  backgrounds[0] = loadImage("MR_S_ARMUP.png");
+  backgrounds[1] = loadImage("MR_S_ARMMID.png");
+  backgrounds[2] = loadImage("MR_S_ARMDOWN.png");
+  backgrounds[3] = loadImage("MR_S_ARMMID.png");
   mic.start();
   song.start();
 }
 
 void draw() {
   background(255);
+  //background(backgrounds[frameCount / 5 % 4]);
   
-  for (int i = 0; i < width; i++) {
-    line(i, height, i, height - mic.spectrum[i] * height * 10);
+  for (int i = 0; i < BANDS; i++) {
+    line(i, height, i, height - mic.spectrum[i] * height * 5);
   }
   
-  println(mic.getFrequency() + " " + song.getFrequency());
-  println("Match: " + song.compare(mic) + "%");
-  println(song.isPlaying());
+  if (frameCount % 5 == 0) {
+    micFrequency = mic.getFrequency();
+    songFrequency = song.getFrequency();
+    micNote = mic.getClosestNote(micFrequency);
+    songNote = song.getClosestNote(songFrequency);
+    accuracy = round(song.compare(mic));
+  }
+  
+  text("Microphone: " + micNote + " " + micFrequency, width / 4, height / 2 - 100);
+  text("Song: " + songNote + " " + songFrequency, width / 4, height / 2 - 50);
+  text("Accuracy: " + accuracy + " %", width / 4, height / 2);
 }
 
 /*

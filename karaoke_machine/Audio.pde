@@ -41,13 +41,13 @@ public abstract class Audio {
   /*
   * Returns the frequency of the note that the actual frequency is closest to.
   */
-  public String getClosestPitch() {
+  public String getClosestPitch(float frequency) {
     float distance;
     float closestFrequency = 0;
     float minDistance = Float.POSITIVE_INFINITY;
     
     for (float key : frequencyTable.keySet()) {
-      if ((distance = abs(this.getFrequency() - key)) < minDistance) {
+      if ((distance = abs(frequency - key)) < minDistance) {
         minDistance = distance;
         closestFrequency = key;
       }
@@ -59,8 +59,8 @@ public abstract class Audio {
   /*
   * Returns the name of the note that corresponds to the rounded frequency without the octave number.
   */
-  public String getClosestNote() {
-    String closestPitch = getClosestPitch();
+  public String getClosestNote(float frequency) {
+    String closestPitch = getClosestPitch(frequency);
     
     if (closestPitch.indexOf("/") == -1) {
       return closestPitch.substring(0, 1);
@@ -72,16 +72,16 @@ public abstract class Audio {
   /*
   * Returns a value that represents the note number.
   */
-  public int getClosestNoteValue() {
-    return NOTE_TO_VALUE.get(getClosestNote());
+  public int getClosestNoteValue(float frequency) {
+    return NOTE_TO_VALUE.get(getClosestNote(frequency));
   }
   
   /*
   * Compares two audios and returns a float determining how similar they are.
   */
   public float compare(Audio other) {
-    int f1 = this.getClosestNoteValue();
-    int f2 = other.getClosestNoteValue();
+    int f1 = this.getClosestNoteValue(this.getFrequency());
+    int f2 = other.getClosestNoteValue(other.getFrequency());
     
     return 100 - min(abs(f1 - f2), 12 - abs(f1 - f2)) / 6.0 * 100;
   }
