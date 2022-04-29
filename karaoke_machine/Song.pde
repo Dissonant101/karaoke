@@ -1,17 +1,41 @@
 /*
 * Encapsulates the various files needed for a song in karaoke (accompaniment and melody).
 */
-class Song extends Audio {
-  SoundFile melody;
-  SoundFile accompaniment;
+public class Song extends Audio {
+  private SoundFile melody;
+  private SoundFile accompaniment;
   
   /*
   * Constructor for Song class.
   */
-  Song(PApplet p, String melody, String accompaniment) {
+  public Song(PApplet p, String melody, String accompaniment) {
     super(p);
     this.melody = new SoundFile(p, melody);
     this.accompaniment = new SoundFile(p, accompaniment);
     this.fft.input(this.melody);
+    this.melody.loop();
+    this.accompaniment.loop();
+  }
+  
+  /*
+  * Start playing the melody and accompaniment files.
+  */
+  @Override
+  public void start() {
+    this.melody.play(1, 1);
+    this.accompaniment.play(1, 0);
+  }
+  
+  /*
+  * Stop playing the melody and accompaniment files.
+  */
+  @Override
+  public void stop() {
+    this.melody.stop();
+    this.accompaniment.stop();
+  }
+  
+  public boolean isPlaying() {
+    return melody.isPlaying();
   }
 }
