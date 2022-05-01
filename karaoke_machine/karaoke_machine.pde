@@ -13,10 +13,14 @@ Song song;
 void setup() {
   size(512, 360);
   frameRate(10);
+  textAlign(CENTER);
+  PFont candara;
+  candara = createFont("Candara-48.vlw", 40);
+  textFont(candara);
   
   frequencyTable = generateFrequencyTable();
   mic = new Microphone(this);
-  song = new Song(this, "Little Lamb Melody.wav", "Little Lamb Accompaniment.wav");
+  song = new Song(this, "Little Lamb Melody.wav", "Little Lamb Accompaniment.wav", "Little Lamb Lyrics.txt", 85);
   mic.start();
   song.start();
 }
@@ -31,6 +35,7 @@ void draw() {
   println(mic.getFrequency() + " " + song.getFrequency());
   println("Match: " + song.compare(mic) + "%");
   println(song.isPlaying());
+  drawLyrics(song);
 }
 
 /*
