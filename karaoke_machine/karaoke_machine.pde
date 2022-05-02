@@ -24,7 +24,6 @@ void setup() {
   song = new Song(this, "Little Lamb Melody.wav", "Little Lamb Accompaniment.wav", "Little Lamb Lyrics.txt", 85);
   mic.start();
   song.start();
-  stopwatch.start();
   getLyrics(song);
 }
 
@@ -39,6 +38,7 @@ void draw() {
   println("Match: " + song.compare(mic) + "%");
   println(song.isPlaying());
   drawLyrics(song);
+  
 }
 
 /*

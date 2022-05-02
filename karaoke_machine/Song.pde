@@ -5,12 +5,12 @@ public class Song extends Audio {
   private SoundFile melody;
   private SoundFile accompaniment;
   private String[] lyrics;
-  private int bpm;
+  private float bpm;
   
   /*
   * Constructor for Song class.
   */
-  public Song(PApplet p, String melody, String accompaniment, String lyrics, int bpm) {
+  public Song(PApplet p, String melody, String accompaniment, String lyrics, float bpm) {
     super(p);
     this.melody = new SoundFile(p, melody);
     this.accompaniment = new SoundFile(p, accompaniment);
