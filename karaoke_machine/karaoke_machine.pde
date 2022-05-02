@@ -3,7 +3,6 @@ import processing.sound.*;
 import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
-import lord_of_galaxy.timing_utils.*;
 
 static final int BANDS = 2048;
 
@@ -15,9 +14,9 @@ void setup() {
   size(512, 360);
   frameRate(10);
   textAlign(CENTER);
-  //PFont candara;
-  //candara = createFont("Candara-48.vlw", 40);
-  //textFont(candara);
+  PFont candara;
+  candara = createFont("Candara-48.vlw", 40);
+  textFont(candara);
   
   frequencyTable = generateFrequencyTable();
   mic = new Microphone(this);
