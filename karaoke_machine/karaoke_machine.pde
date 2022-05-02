@@ -1,33 +1,73 @@
 import processing.core.PApplet;
 import processing.sound.*;
+import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
+import g4p_controls.*;
+
 
 static final int BANDS = 2048;
+PImage b;
+PImage img;
+String[] pics = {"MR_S_ARMUP.png","MR_S_ARMMID.png","MR_S_ARMDOWN.png","MR_S_ARMMID.png"};
+int currentPic = 0;
+int bpm = 85;
+
+boolean bg = true;
 
 Map<Float, String> frequencyTable;
 Microphone mic;
 Song song;
+String micNote, songNote;
+float micFrequency, songFrequency;
+int accuracy;
+PImage[] backgrounds;
 
 void setup() {
-  size(512, 360);
-  frameRate(10);
+  size(466, 466); // 512x360, 1021x763
+  textSize(24);
+  textAlign(LEFT);
+  fill(0);
+  frameRate(30);
+  
+  b = loadImage("Curtains img 1.jpg");
+  
+  createGUI();
+  
+  img = loadImage(pics[currentPic]);
   
   frequencyTable = generateFrequencyTable();
-  mic = new Microphone(this);
-  song = new Song(this, "baby_cat.mp3", "baby_cat.mp3");
-  mic.in.start();
-  //song.melody.play(1, 1);
+  
+  backgrounds = new PImage[4];
+  backgrounds[0] = loadImage("MR_S_ARMUP.png");
+  backgrounds[1] = loadImage("MR_S_ARMMID.png");
+  backgrounds[2] = loadImage("MR_S_ARMDOWN.png");
+  backgrounds[3] = loadImage("MR_S_ARMMID.png");
+
 }
 
 void draw() {
-  background(255);
   
-  for (int i = 0; i < width; i++) {
-    line(i, height, i, height - mic.spectrum[i] * height * 10);
+  if(bg) 
+    background(b);
+  
+  else {
+    for (int i = 0; i < BANDS; i++) {
+      line(i, height, i, height - mic.spectrum[i] * height * 5);
+    }
+    
+    if (frameCount % 5 == 0) {
+      micFrequency = mic.getFrequency();
+      songFrequency = song.getFrequency();
+      micNote = mic.getClosestNote(micFrequency);
+      songNote = song.getClosestNote(songFrequency);
+      accuracy = round(song.compare(mic));
+    }
+    
+    text("Microphone: " + micNote + " " + micFrequency, width / 4, height / 2 - 100);
+    text("Song: " + songNote + " " + songFrequency, width / 4, height / 2 - 50);
+    text("Accuracy: " + accuracy + " %", width / 4, height / 2);
   }
-  
-  println(mic.getFrequency() + " " + mic.findClosestNote());
 }
 
 /*
@@ -65,4 +105,17 @@ int argMax(float[] vals) {
   }
   
   return maxIndex;
+}
+
+/*
+* Detremines when to change the background image
+*/
+void changeBackground() {
+   background(img);
+   int changesPerMin = round(frameRate*60/bpm);
+
+   if(frameCount % changesPerMin == 0) {
+     currentPic ++;
+     img = loadImage(pics[currentPic%4]); 
+   }
 }
