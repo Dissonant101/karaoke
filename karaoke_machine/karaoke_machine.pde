@@ -32,7 +32,7 @@ float accuracySum = 0;
 int divisor = 0;
 
 void setup() {
-  size(512, 360);
+  size(512, 450);
   frameRate(10);
   textAlign(CENTER);
   PFont candara;
@@ -46,7 +46,7 @@ void setup() {
 
 void draw() {
   if (gameState == "menu") {
-    background(img);
+    background(b);
   } else if (gameState == "play") {
     changeBackground();
 
@@ -111,7 +111,7 @@ public int argMax(float[] vals) {
 * Determines when to change the background image.
 */
 void changeBackground() {
-  background(img);
+  image(img, 0, 0);
   int changesPerMin = round(frameRate*60/bpm);
 
   if (frameCount % changesPerMin == 0) {
