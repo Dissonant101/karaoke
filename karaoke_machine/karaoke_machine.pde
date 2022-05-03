@@ -21,6 +21,8 @@ ArrayList<PVector> movingNotes = new ArrayList<PVector>();
 ArrayList<String> noteName = new ArrayList<String>();
 
 boolean paused = false;
+String choice;
+int space = 340;
 
 Map<Float, String> frequencyTable;
 Microphone mic;
@@ -42,6 +44,9 @@ void setup() {
   img = loadImage(pics[currentPic]);
   frequencyTable = generateFrequencyTable();
   createGUI();
+  pause.setVisible(false);
+  volume.setVisible(false);
+  quit.setVisible(false);
 }
 
 void draw() {

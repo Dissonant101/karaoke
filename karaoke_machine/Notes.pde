@@ -2,8 +2,8 @@
 * Shows notes on screen.
 */
 void showNotes() {
-  fill(0,0,255);
-  int[] noteHeight = {height/14, height/7, 3*height/14, 4*height/14, 5*height/14, 6*height/14, height/2, 8*height/14, 9*height/14, 10*height/14, 11*height/14, 6*height/7};
+  fill(255);
+  int[] noteHeight = {6*space/7, 11*space/14, 10*space/14, 9*space/14, 8*space/14, space/2, 6*space/14, 5*space/14, 4*space/14, 3*space/14, space/7, space/14};
 
   for (int i = 0; i < notes.length; i++) {
     if (note == notes[i]) {
