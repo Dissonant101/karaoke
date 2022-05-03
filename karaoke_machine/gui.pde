@@ -16,23 +16,30 @@
 
 public void startButtonClicked(GButton source, GEvent event) { //_CODE_:button2:721551:
   bg = false;
-  background(img);
-  changeBackground();
+  
+  background(255);
+  //changeBackground();
+  
   mic.start();
   song.start(); 
+  
+  button2.setVisible(false);
+  Song_Selection.setVisible(false);
 } //_CODE_:button2:721551:
 
 public void songSelectionListClicked(GDropList source, GEvent event) { //_CODE_:Song_Selection:965194:
   mic = new Microphone(this);
-  String choice = source.getSelectedText();
-  if(choice == "Mary Had little Lamb") 
-  song = new Song(this, "Little Lamb Melody.wav", "Little Lamb Melody.wav");
+  song = littleLamb;
   
-  if(choice == "You Belong With Me (Taylor Swift)") 
-  song = new Song(this, "", "");
+  String choice = source.getSelectedText();
+  
+  //if(choice == "Mary Had little Lamb") 
+    
+  /*if(choice == "You Belong With Me (Taylor Swift)") 
+    song = new Song(this, "", "");
   
   if(choice == "Forever Like That (Ben Rector)") 
-  song = new Song(this, "", "");
+    song = new Song(this, "", "");*/
   
 } //_CODE_:Song_Selection:965194:
 

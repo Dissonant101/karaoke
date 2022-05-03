@@ -18,6 +18,8 @@ boolean bg = true;
 Map<Float, String> frequencyTable;
 Microphone mic;
 Song song;
+Song littleLamb;
+
 String micNote, songNote;
 float micFrequency, songFrequency;
 int accuracy;
@@ -44,8 +46,9 @@ void setup() {
   backgrounds[2] = loadImage("MR_S_ARMDOWN.png");
   backgrounds[3] = loadImage("MR_S_ARMMID.png");
 
+  littleLamb = new Song(this, "Little Lamb Melody.wav", "Little Lamb Melody.wav");
+  
 }
-
 void draw() {
   
   if(bg) 
@@ -53,7 +56,7 @@ void draw() {
   
   else {
     for (int i = 0; i < BANDS; i++) {
-      line(i, height, i, height - mic.spectrum[i] * height * 5);
+ 
     }
     
     if (frameCount % 5 == 0) {
