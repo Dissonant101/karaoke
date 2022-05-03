@@ -7,6 +7,9 @@ import java.util.HashMap;
 
 static final int BANDS = 2048;
 
+String gameState = "play";
+float vol = 1.0;
+
 PImage img;
 String[] pics = {"MR_S_ARMUP.png", "MR_S_ARMMID.png", "MR_S_ARMDOWN.png", "MR_S_ARMMID.png"};
 int currentPic = 0;
@@ -51,8 +54,9 @@ void setup() {
 }
 
 void draw() {
-
   background(255);
+  
+  if(gameState == "play") {
   //changeBackground();
 
   for (int i = 0; i < BANDS; i++) {
@@ -72,6 +76,7 @@ void draw() {
   text("Microphone: " + micNote + " " + micFrequency, width / 4, height / 2 - 100);
   text("Song: " + songNote + " " + songFrequency, width / 4, height / 2 - 50);
   text("Accuracy: " + accuracy + " %", width / 4, height / 2);
+  }
 }
 
 /*
@@ -130,7 +135,7 @@ void changeBackground() {
 * shows notes on screen
  */
 void showNotes() {
-  fill(0, 0, 255);
+  fill(0,0,255);
   int[] noteHeight = {height/14, height/7, 3*height/14, 4*height/14, 5*height/14, 6*height/14, height/2, 8*height/14, 9*height/14, 10*height/14, 11*height/14, 6*height/7};
 
   for (int i = 0; i < notes.length; i++) {
@@ -155,6 +160,9 @@ void showNotes() {
   fill(0);
 }
 
+/*
+* finds what note is currently playing so that it can be printed on screen
+*/
 void findNote() {
   for (int i = 0; i < 12; i++) {
     if (songNote.equals(notes[i]))

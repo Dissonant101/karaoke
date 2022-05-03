@@ -28,11 +28,15 @@ public void pauseButton(GButton source, GEvent event) { //_CODE_:pause:277523:
 } //_CODE_:pause:277523:
 
 public void volumeSlider(GCustomSlider source, GEvent event) { //_CODE_:volume:675395:
-  println("volume - GCustomSlider >> GEvent." + event + " @ " + millis());
+  vol = volume.getValueF();
+  println(vol);
+  song.pause();
+  song.start();
 } //_CODE_:volume:675395:
 
 public void quitGame(GButton source, GEvent event) { //_CODE_:quit:425047:
-  println("quit - GButton >> GEvent." + event + " @ " + millis());
+  gameState = "menu";
+  song.stop();
 } //_CODE_:quit:425047:
 
 
