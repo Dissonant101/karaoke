@@ -22,7 +22,7 @@ public class Song extends Audio {
   */
   @Override
   public void start() {
-    this.melody.play(1, 1);
+    this.melody.play(1, vol);
     this.accompaniment.play(1, 0);
   }
   
@@ -33,6 +33,11 @@ public class Song extends Audio {
   public void stop() {
     this.melody.stop();
     this.accompaniment.stop();
+  }
+  
+  public void pause() {
+    this.melody.pause();
+    this.accompaniment.pause();
   }
   
   public boolean isPlaying() {
