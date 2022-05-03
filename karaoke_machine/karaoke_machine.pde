@@ -28,36 +28,33 @@ Song song;
 String micNote, songNote;
 float micFrequency, songFrequency;
 int accuracy;
-PImage[] backgrounds;
+float accuracySum = 0;
+int divisor = 0;
 
 void setup() {
-  size(512, 360); // 512x360, 1021x763
-  textSize(24);
-  textAlign(LEFT);
-  fill(0);
-  frameRate(30);
+  size(512, 360);
+  frameRate(10);
+  textAlign(CENTER);
+  PFont candara;
+  candara = createFont("Candara-48.vlw", 40);
+  textFont(candara);
   
-  createGUI();
-
   img = loadImage(pics[currentPic]);
-
   frequencyTable = generateFrequencyTable();
   mic = new Microphone(this);
-  song = new Song(this, "baby_cat.mp3", "baby_cat.mp3");
-  backgrounds = new PImage[4];
-  backgrounds[0] = loadImage("MR_S_ARMUP.png");
-  backgrounds[1] = loadImage("MR_S_ARMMID.png");
-  backgrounds[2] = loadImage("MR_S_ARMDOWN.png");
-  backgrounds[3] = loadImage("MR_S_ARMMID.png");
+  song = new Song(this, "Little Lamb Melody.wav", "Little Lamb Accompaniment.wav", "Little Lamb Lyrics.txt", 85);
   mic.start();
   song.start();
+  getLyrics(song);
+  createGUI();
 }
 
 void draw() {
   background(255);
   
-  if(gameState == "play") {
-  //changeBackground();
+  if (gameState == "play") {
+    changeBackground();
+  }
 
   for (int i = 0; i < BANDS; i++) {
     line(i, height, i, height - mic.spectrum[i] * height * 5);
@@ -68,15 +65,12 @@ void draw() {
     songFrequency = song.getFrequency();
     micNote = mic.getClosestNote(micFrequency);
     songNote = song.getClosestNote(songFrequency);
-    accuracy = round(song.compare(mic));
+    song.compare(mic, accuracySum, divisor);
     findNote();
   }
 
   showNotes();
-  text("Microphone: " + micNote + " " + micFrequency, width / 4, height / 2 - 100);
-  text("Song: " + songNote + " " + songFrequency, width / 4, height / 2 - 50);
-  text("Accuracy: " + accuracy + " %", width / 4, height / 2);
-  }
+  drawLyrics(song);
 }
 
 /*
@@ -103,8 +97,8 @@ Map<Float, String> generateFrequencyTable() {
 
 /*
 * Returns the index of the max value in an array of floats.
- */
-int argMax(float[] vals) {
+*/
+public int argMax(float[] vals) {
   int maxIndex = 0;
   float max = 0;
 
@@ -132,7 +126,7 @@ void changeBackground() {
 }
 
 /*
-* shows notes on screen
+* Shows notes on screen.
  */
 void showNotes() {
   fill(0,0,255);
@@ -161,11 +155,18 @@ void showNotes() {
 }
 
 /*
-* finds what note is currently playing so that it can be printed on screen
+* Finds what note is currently playing so that it can be printed on screen.
 */
 void findNote() {
   for (int i = 0; i < 12; i++) {
     if (songNote.equals(notes[i]))
       note = notes[i];
   }
+}
+
+/*
+* Returns the average accuracy as a float.
+*/
+float getAverageAccuracy() {
+  return accuracySum / divisor;
 }

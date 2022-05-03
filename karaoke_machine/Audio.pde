@@ -79,10 +79,16 @@ public abstract class Audio {
   /*
   * Compares two audios and returns a float determining how similar they are.
   */
-  public float compare(Audio other) {
+  public float compare(Audio other, Float runningSum, Integer n) {
     int f1 = this.getClosestNoteValue(this.getFrequency());
-    int f2 = other.getClosestNoteValue(other.getFrequency());
+    int f2 = other.getClosestNoteValue(this.getFrequency());
+    float d = 100 - min(abs(f1 - f2), 12 - abs(f1 - f2)) / 6.0 * 100;
     
-    return 100 - min(abs(f1 - f2), 12 - abs(f1 - f2)) / 6.0 * 100;
+    if (true) {
+      runningSum += d;
+      n++;
+    }
+    
+    return d;
   }
 }
