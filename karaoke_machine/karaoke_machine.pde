@@ -4,12 +4,12 @@ import processing.sound.*;
 import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
+import g4p_controls.*;
 
 static final int BANDS = 2048;
-
-String gameState = "play";
+String gameState = "menu";
 float vol = 1.0;
-
+PImage b;
 PImage img;
 String[] pics = {"MR_S_ARMUP.png", "MR_S_ARMMID.png", "MR_S_ARMDOWN.png", "MR_S_ARMMID.png"};
 int currentPic = 0;
@@ -38,39 +38,34 @@ void setup() {
   PFont candara;
   candara = createFont("Candara-48.vlw", 40);
   textFont(candara);
-  
+  b = loadImage("Curtains img 1.jpg");
   img = loadImage(pics[currentPic]);
   frequencyTable = generateFrequencyTable();
-  mic = new Microphone(this);
-  song = new Song(this, "Little Lamb Melody.wav", "Little Lamb Accompaniment.wav", "Little Lamb Lyrics.txt", 85);
-  mic.start();
-  song.start();
-  getLyrics(song);
   createGUI();
 }
 
 void draw() {
-  background(255);
-  
-  if (gameState == "play") {
+  if (gameState == "menu") {
+    background(img);
+  } else if (gameState == "play") {
     changeBackground();
-  }
 
-  for (int i = 0; i < BANDS; i++) {
-    line(i, height, i, height - mic.spectrum[i] * height * 5);
+    for (int i = 0; i < BANDS; i++) {
+      line(i, height, i, height - mic.spectrum[i] * height * 5);
+    }
+  
+    if (frameCount % 10 == 0) {
+      micFrequency = mic.getFrequency();
+      songFrequency = song.getFrequency();
+      micNote = mic.getClosestNote(micFrequency);
+      songNote = song.getClosestNote(songFrequency);
+      song.compare(mic, accuracySum, divisor);
+      findNote();
+    }
+  
+    showNotes();
+    drawLyrics(song);
   }
-
-  if (frameCount % 10 == 0) {
-    micFrequency = mic.getFrequency();
-    songFrequency = song.getFrequency();
-    micNote = mic.getClosestNote(micFrequency);
-    songNote = song.getClosestNote(songFrequency);
-    song.compare(mic, accuracySum, divisor);
-    findNote();
-  }
-
-  showNotes();
-  drawLyrics(song);
 }
 
 /*
@@ -114,7 +109,7 @@ public int argMax(float[] vals) {
 
 /*
 * Determines when to change the background image.
- */
+*/
 void changeBackground() {
   background(img);
   int changesPerMin = round(frameRate*60/bpm);

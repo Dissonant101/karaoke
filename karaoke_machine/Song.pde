@@ -27,7 +27,7 @@ public class Song extends Audio {
   @Override
   public void start() {
     this.melody.play(1, vol);
-    this.accompaniment.play(1, 1);
+    this.accompaniment.play(1, vol);
   }
   
   /*
