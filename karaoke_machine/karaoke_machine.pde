@@ -33,6 +33,8 @@ void setup() {
   textAlign(LEFT);
   fill(0);
   frameRate(30);
+  
+  createGUI();
 
   img = loadImage(pics[currentPic]);
 

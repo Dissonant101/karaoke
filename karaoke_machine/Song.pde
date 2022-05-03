@@ -35,6 +35,11 @@ public class Song extends Audio {
     this.accompaniment.stop();
   }
   
+  public void pause() {
+    this.melody.pause();
+    this.accompaniment.pause();
+  }
+  
   public boolean isPlaying() {
     return melody.isPlaying();
   }
