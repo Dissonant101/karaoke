@@ -18,7 +18,6 @@ boolean bg = true;
 Map<Float, String> frequencyTable;
 Microphone mic;
 Song song;
-Song littleLamb;
 
 String micNote, songNote;
 float micFrequency, songFrequency;
@@ -45,9 +44,6 @@ void setup() {
   backgrounds[1] = loadImage("MR_S_ARMMID.png");
   backgrounds[2] = loadImage("MR_S_ARMDOWN.png");
   backgrounds[3] = loadImage("MR_S_ARMMID.png");
-
-  littleLamb = new Song(this, "Little Lamb Melody.wav", "Little Lamb Melody.wav");
-  
 }
 void draw() {
   
@@ -55,6 +51,8 @@ void draw() {
     background(b);
   
   else {
+    background(255);
+    //changeBackground();
     for (int i = 0; i < BANDS; i++) {
  
     }
