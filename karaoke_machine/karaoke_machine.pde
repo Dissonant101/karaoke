@@ -9,6 +9,8 @@ static final int BANDS = 2048;
 Map<Float, String> frequencyTable;
 Microphone mic;
 Song song;
+float accuracySum = 0;
+int divisor = 0;
 
 void setup() {
   size(512, 360);
@@ -63,7 +65,7 @@ Map<Float, String> generateFrequencyTable() {
 /*
 * Returns the index of the max value in an array of floats.
 */
-int argMax(float[] vals) {
+public int argMax(float[] vals) {
   int maxIndex = 0;
   float max = 0;
   
@@ -75,4 +77,8 @@ int argMax(float[] vals) {
   }
   
   return maxIndex;
+}
+
+public float getAverageAccuracy() {
+  return accuracySum / divisor;
 }
