@@ -148,8 +148,8 @@ float getAverageAccuracy() {
 void loadSongs() {
   littleLamb = new Song(this, "Little Lamb Melody.wav", "Little Lamb Accompaniment.wav", "Little Lamb Lyrics.txt", 85);
   littleLamb.stop();
-  belongWithMe = new Song(this, "Little Lamb Melody.wav", "Little Lamb Accompaniment.wav", "Little Lamb Lyrics.txt", 85);
+  belongWithMe = new Song(this, "Belong With Me Melody.wav", "Belong With Me Accompaniment.wav", "Belong With Me Lyrics.txt", 130);
   belongWithMe.stop();
-  foreverLikeThat = new Song(this, "Little Lamb Melody.wav", "Little Lamb Accompaniment.wav", "Little Lamb Lyrics.txt", 85);
+  foreverLikeThat = new Song(this, "Forever Like That Melody.wav", "Forever Like That Accompaniment.wav", "Forever Like That Lyrics.txt", 115);
   foreverLikeThat.stop();
 }
