@@ -1,6 +1,3 @@
-String[] lyricText;
-float[] lyricBeatCue;
-
 /*
 * Splits lyric files into two arrays; one for lyrics, one for the beat on which they should display.
 */

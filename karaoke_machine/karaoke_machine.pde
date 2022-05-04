@@ -1,12 +1,11 @@
 import g4p_controls.*;
-import processing.core.PApplet;
 import processing.sound.*;
+import processing.core.PApplet;
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import g4p_controls.*;
 
 static final int BANDS = 2048;
 static final String[] pics = {"MR_S_ARMUP.png", "MR_S_ARMMID.png", "MR_S_ARMDOWN.png", "MR_S_ARMMID.png"};
@@ -20,6 +19,12 @@ int currentPic = 0;
 String note, previousNote;
 List<PVector> movingNotes = new ArrayList<PVector>();
 List<String> noteName = new ArrayList<String>();
+String[] lyricText;
+float[] lyricBeatCue;
+float micFrequency, songFrequency;
+String micNote, songNote;
+float accuracySum;
+int divisor;
 String gameState;
 float vol = 1.0;
 boolean paused = false;
@@ -30,10 +35,6 @@ Song song;
 Song littleLamb;
 Song belongWithMe;
 Song foreverLikeThat;
-String micNote, songNote;
-float micFrequency, songFrequency;
-float accuracySum;
-int divisor;
 
 void setup() {
   size(512, 450);
@@ -64,23 +65,20 @@ void draw() {
         displayGameOver();
     }
     
-    micFrequency = mic.getFrequency();
-    songFrequency = song.getFrequency();
-    micNote = mic.getClosestNote(micFrequency);
-    songNote = song.getClosestNote(songFrequency);
-    
     if (!paused) {
       changeBackground();
       showNotes();
     }
     
+    micFrequency = mic.getFrequency();
+    songFrequency = song.getFrequency();
+    micNote = mic.getClosestNote(micFrequency);
+    songNote = song.getClosestNote(songFrequency);
     song.compare(mic);
     findNote();
     drawLyrics(song);
   } else if (gameState == "game over") {
       image(gameOverBackground, 0, 0);
-      fill(255);
-      textSize(15);
       text("Congrats! Your accuracy was: " + round(getAverageAccuracy()) + "%", 253, 320);
   }
 }

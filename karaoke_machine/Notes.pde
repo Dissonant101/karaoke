@@ -1,4 +1,14 @@
 /*
+* Finds what note is currently playing so that it can be printed on screen.
+*/
+void findNote() {
+  for (int i = 0; i < 12; i++) {
+    if (songNote.equals(notes[i]))
+      note = notes[i];
+  }
+}
+
+/*
 * Shows notes on screen.
 */
 void showNotes() {
@@ -25,14 +35,4 @@ void showNotes() {
     }
   }
   fill(0);
-}
-
-/*
-* Finds what note is currently playing so that it can be printed on screen.
-*/
-void findNote() {
-  for (int i = 0; i < 12; i++) {
-    if (songNote.equals(notes[i]))
-      note = notes[i];
-  }
 }

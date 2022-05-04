@@ -56,4 +56,7 @@ public void displayGameOver() {
   song.melody.cue(0);
   song.accompaniment.cue(0);
   song.stop();
+  
+  fill(255);
+  textSize(15);
 }
