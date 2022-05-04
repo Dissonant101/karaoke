@@ -10,7 +10,6 @@ public abstract class Audio {
   * Constructor for Audio class.
   */
   public Audio(PApplet p) {
-    String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
     Map<String, Integer> map = new HashMap<String, Integer>();
     for (int i = 0; i < 12; i++) {
       map.put(notes[i], i);

@@ -1,73 +1,75 @@
 import g4p_controls.*;
-import processing.core.PApplet;
 import processing.sound.*;
+import processing.core.PApplet;
 import java.util.Collections;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import g4p_controls.*;
 
 static final int BANDS = 2048;
-PApplet p = this;
-String gameState = "menu";
-float vol = 1.0;
-PImage b;
-PImage img;
-PImage img2;
-String[] pics = {"MR_S_ARMUP.png", "MR_S_ARMMID.png", "MR_S_ARMDOWN.png", "MR_S_ARMMID.png"};
-int currentPic = 0;
-String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
-String note;
-String previousNote;
-ArrayList<PVector> movingNotes = new ArrayList<PVector>();
-ArrayList<String> noteName = new ArrayList<String>();
+static final String[] pics = {"MR_S_ARMUP.png", "MR_S_ARMMID.png", "MR_S_ARMDOWN.png", "MR_S_ARMMID.png"};
+static final String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
+static final int space = 340;
 
+PFont candara;
+Map<Float, String> frequencyTable;
+PImage mainMenuBackground, karaokeBackground, gameOverBackground;
+int currentPic = 0;
+String note, previousNote;
+List<PVector> movingNotes = new ArrayList<PVector>();
+List<String> noteName = new ArrayList<String>();
+String[] lyricText;
+float[] lyricBeatCue;
+float micFrequency, songFrequency;
+String micNote, songNote;
+float accuracySum;
+int divisor;
+String gameState;
+float vol = 1.0;
 boolean paused = false;
 String choice;
-int space = 340;
 
-Map<Float, String> frequencyTable;
 Microphone mic;
 Song song;
 Song littleLamb;
 Song belongWithMe;
 Song foreverLikeThat;
-String micNote, songNote;
-float micFrequency, songFrequency;
-float accuracySum;
-int divisor;
 
 void setup() {
   size(512, 450);
   frameRate(30);
   textAlign(CENTER);
-  PFont candara;
+  
   candara = createFont("Candara", 40);
   textFont(candara);
-  b = loadImage("Curtains img 1.jpg");
-  img = loadImage(pics[currentPic]);
-  img2 = loadImage("Game over.png");
+  
+  mainMenuBackground = loadImage("Curtains img 1.jpg");
+  karaokeBackground = loadImage(pics[currentPic]);
+  gameOverBackground = loadImage("Game over.png");
+  
   frequencyTable = generateFrequencyTable();
   loadSongs();
   createGUI();
-  pause.setVisible(false);
-  volume.setVisible(false);
-  quit.setVisible(false);
-  backToMenu.setVisible(false);
-  volumeLabel.setVisible(false);
+  displayMainMenu();
 }
 
 void draw() {
   if (gameState == "menu") {
     fill(255);
     textSize(40);
-    background(b);
+    background(mainMenuBackground);
     text("Karaoke Hero", 253, 170);
   } else if (gameState == "play") {
+    if (!paused && !song.isPlaying()) {
+        displayGameOver();
+    }
+    
     if (!paused) {
       changeBackground();
       showNotes();
     }
-  
+    
     micFrequency = mic.getFrequency();
     songFrequency = song.getFrequency();
     micNote = mic.getClosestNote(micFrequency);
@@ -76,9 +78,7 @@ void draw() {
     findNote();
     drawLyrics(song);
   } else if (gameState == "game over") {
-      image(img2, 0, 0);
-      fill(255);
-      textSize(15);
+      image(gameOverBackground, 0, 0);
       text("Congrats! Your accuracy was: " + round(getAverageAccuracy()) + "%", 253, 320);
   }
 }
@@ -126,12 +126,12 @@ public int argMax(float[] vals) {
 * Determines when to change the background image.
 */
 void changeBackground() {
-  image(img, 0, 0);
+  image(karaokeBackground, 0, 0);
   int changesPerMin = round(frameRate*60/song.bpm);
 
   if (frameCount % changesPerMin == 0) {
-    currentPic ++;
-    img = loadImage(pics[currentPic%4]);
+    currentPic++;
+    karaokeBackground = loadImage(pics[currentPic%4]);
   }
 }
 

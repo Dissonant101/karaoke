@@ -29,7 +29,7 @@ public class Song extends Audio {
   }
   
   /*
-  * Stop playing the melody and accompaniment files.
+  * Stops playing the melody and accompaniment files.
   */
   @Override
   public void stop() {
@@ -37,15 +37,24 @@ public class Song extends Audio {
     this.accompaniment.stop();
   }
   
+  /*
+  * Stops playing the melody and accompaniment files but keeps its position.
+  */
   public void pause() {
     this.melody.pause();
     this.accompaniment.pause();
   }
   
+  /*
+  * Checks if the song is currently playing.
+  */
   public boolean isPlaying() {
     return melody.isPlaying();
   }
   
+  /*
+  * Sets the volume of the song.
+  */
   public void setVolume() {
     this.melody.amp(vol);
     this.accompaniment.amp(vol);
