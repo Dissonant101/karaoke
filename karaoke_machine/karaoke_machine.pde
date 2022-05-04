@@ -75,7 +75,15 @@ void draw() {
     song.compare(mic);
     findNote();
     drawLyrics(song);
+    if (songFrequency == 0)
+        gameState = "game over";
   } else if (gameState == "game over") {
+      exit.setVisible(true);
+      backToMenu.setVisible(true);
+      pause.setVisible(false);
+      volume.setVisible(false);
+      quit.setVisible(false);
+      volumeLabel.setVisible(false);
       image(img2, 0, 0);
       fill(255);
       textSize(15);
