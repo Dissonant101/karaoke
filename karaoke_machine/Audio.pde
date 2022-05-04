@@ -87,8 +87,9 @@ public abstract class Audio {
     float d = 100 - min(abs(v1 - v2), 12 - abs(v1 - v2)) / 6.0 * 100;
     float a1, a2;
     
-    if ((a1 = max(this.spectrum)) > 0.001) {
-      println(a1, f1, f2, d);
+    if ((a1 = max(this.spectrum)) > 0.001 && !paused) {
+      a2 = max(other.spectrum);
+      println(a1, f1, a2, f2, d);
       runningSum += d;
       n++;
     }

@@ -58,7 +58,10 @@ void draw() {
   if (gameState == "menu") {
     background(b);
   } else if (gameState == "play") {
-    changeBackground();
+    if (!paused) {
+      changeBackground();
+      showNotes();
+    }
 
     for (int i = 0; i < BANDS; i++) {
       line(i, height, i, height - mic.spectrum[i] * height * 5);
@@ -70,7 +73,6 @@ void draw() {
     songNote = song.getClosestNote(songFrequency);
     song.compare(mic, accuracySum, divisor);
     findNote();
-    showNotes();
     drawLyrics(song);
   }
 }
