@@ -33,6 +33,8 @@ public void volumeSlider(GCustomSlider source, GEvent event) { //_CODE_:volume:6
 
 public void quitGame(GButton source, GEvent event) { //_CODE_:quit:425047:
   gameState = "game over";
+  song.melody.cue(0);
+  song.accompaniment.cue(0);
   song.stop();
   pause.setVisible(false);
   volume.setVisible(false);
