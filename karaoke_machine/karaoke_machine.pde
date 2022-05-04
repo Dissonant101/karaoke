@@ -12,9 +12,9 @@ String gameState = "menu";
 float vol = 1.0;
 PImage b;
 PImage img;
+PImage img2;
 String[] pics = {"MR_S_ARMUP.png", "MR_S_ARMMID.png", "MR_S_ARMDOWN.png", "MR_S_ARMMID.png"};
 int currentPic = 0;
-int bpm = 85;
 String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 String note;
 String previousNote;
@@ -46,25 +46,27 @@ void setup() {
   textFont(candara);
   b = loadImage("Curtains img 1.jpg");
   img = loadImage(pics[currentPic]);
+  img2 = loadImage("Game over.png");
   frequencyTable = generateFrequencyTable();
   loadSongs();
   createGUI();
   pause.setVisible(false);
   volume.setVisible(false);
   quit.setVisible(false);
+  backToMenu.setVisible(false);
+  volumeLabel.setVisible(false);
 }
 
 void draw() {
   if (gameState == "menu") {
+    fill(255);
+    textSize(40);
     background(b);
+    text("Karaoke Hero", 253, 170);
   } else if (gameState == "play") {
     if (!paused) {
       changeBackground();
       showNotes();
-    }
-
-    for (int i = 0; i < BANDS; i++) {
-      line(i, height, i, height - mic.spectrum[i] * height * 5);
     }
   
     micFrequency = mic.getFrequency();
@@ -74,6 +76,11 @@ void draw() {
     song.compare(mic, accuracySum, divisor);
     findNote();
     drawLyrics(song);
+  } else if (gameState == "game over") {
+      image(img2, 0, 0);
+      fill(255);
+      textSize(15);
+      text("Congrats! Your accuracy was: " + getAverageAccuracy(), 253, 320);
   }
 }
 
@@ -121,7 +128,7 @@ public int argMax(float[] vals) {
 */
 void changeBackground() {
   image(img, 0, 0);
-  int changesPerMin = round(frameRate*60/bpm);
+  int changesPerMin = round(frameRate*60/song.bpm);
 
   if (frameCount % changesPerMin == 0) {
     currentPic ++;
