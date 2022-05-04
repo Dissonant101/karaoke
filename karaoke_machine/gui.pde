@@ -34,6 +34,7 @@ public void volumeSlider(GCustomSlider source, GEvent event) { //_CODE_:volume:6
 } //_CODE_:volume:675395:
 
 public void quitGame(GButton source, GEvent event) { //_CODE_:quit:425047:
+  redraw();
   gameState = "menu";
   song.stop();
   pause.setVisible(false);
