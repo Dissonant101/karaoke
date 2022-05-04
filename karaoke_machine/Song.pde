@@ -49,7 +49,7 @@ public class Song extends Audio {
   * Checks if the song is currently playing.
   */
   public boolean isPlaying() {
-    return melody.isPlaying();
+    return this.accompaniment.isPlaying();
   }
   
   /*
