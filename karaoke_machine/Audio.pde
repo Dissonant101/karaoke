@@ -35,7 +35,7 @@ public abstract class Audio {
   */
   public float getFrequency() {
     this.fft.analyze(this.spectrum);
-    return argMax(this.spectrum) * 44100 / BANDS / 2;
+    return argMax(this.spectrum) * 44100 / BANDS / 2.0;
   }
   
   /*
@@ -79,16 +79,18 @@ public abstract class Audio {
   /*
   * Compares two audios and returns a float determining how similar they are.
   */
-  public float compare(Audio other, Float runningSum, Integer n) {
-    int f1 = this.getClosestNoteValue(this.getFrequency());
-    int f2 = other.getClosestNoteValue(this.getFrequency());
-    float d = 100 - min(abs(f1 - f2), 12 - abs(f1 - f2)) / 6.0 * 100;
+  public void compare(Audio other, Float runningSum, Integer n) {
+    float f1 = this.getFrequency();
+    float f2 = other.getFrequency();
+    int v1 = this.getClosestNoteValue(f1);
+    int v2 = other.getClosestNoteValue(f2);
+    float d = 100 - min(abs(v1 - v2), 12 - abs(v1 - v2)) / 6.0 * 100;
+    float a1, a2;
     
-    if (true) {
+    if ((a1 = max(this.spectrum)) > 0.001) {
+      println(a1, f1, f2, d);
       runningSum += d;
       n++;
     }
-    
-    return d;
   }
 }

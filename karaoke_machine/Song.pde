@@ -17,8 +17,6 @@ public class Song extends Audio {
     this.lyrics = loadStrings(lyrics);
     this.bpm = bpm;
     this.fft.input(this.melody);
-    this.melody.loop();
-    this.accompaniment.loop();
   }
   
   /*
@@ -46,5 +44,10 @@ public class Song extends Audio {
   
   public boolean isPlaying() {
     return melody.isPlaying();
+  }
+  
+  public void setVolume() {
+    this.melody.amp(vol);
+    this.accompaniment.amp(vol);
   }
 }

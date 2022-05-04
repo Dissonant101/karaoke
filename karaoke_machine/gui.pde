@@ -30,8 +30,7 @@ public void pauseButton(GButton source, GEvent event) { //_CODE_:pause:277523:
 
 public void volumeSlider(GCustomSlider source, GEvent event) { //_CODE_:volume:675395:
   vol = volume.getValueF();
-  song.pause();
-  song.start();
+  song.setVolume();
 } //_CODE_:volume:675395:
 
 public void quitGame(GButton source, GEvent event) { //_CODE_:quit:425047:
@@ -46,7 +45,7 @@ public void startButtonClicked(GButton source, GEvent event) { //_CODE_:button2:
   if (choice.equals("Song Selection")) {
   } else {
     gameState = "play";
-    mic = new Microphone(this);
+    mic = new Microphone(p);
     getLyrics(song);
 
     background(255);
@@ -65,16 +64,15 @@ public void startButtonClicked(GButton source, GEvent event) { //_CODE_:button2:
 public void songSelectionListClicked(GDropList source, GEvent event) { //_CODE_:Song_Selection:965194:
 
   choice = source.getSelectedText();
+  println(choice);
 
   if (choice.equals("Mary Had A little Lamb")) {
-    song = new Song(this, "Little Lamb Melody.wav", "Little Lamb Accompaniment.wav", "Little Lamb Lyrics.txt", 85);
-    song.stop();
-  } else {
-    song = new Song(this, "440_hz.wav", "440_hz.wav", "Little Lamb Lyrics.txt", 85);
+    song = littleLamb;
+  } else if (choice.equals("You Belong With Me (Taylor Swift)")) {
+    song = belongWithMe;
+  } else if (choice.equals("Forever Like That (Ben Rector)")) {
+    song = foreverLikeThat;
   }
-
-  //if(choice == "You Belong With Me (Taylor Swift)")
-  //if(choice == "Forever Like That (Ben Rector)")
 } //_CODE_:Song_Selection:965194:
 
 

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import g4p_controls.*;
 
 static final int BANDS = 2048;
+PApplet p = this;
 String gameState = "menu";
 float vol = 1.0;
 PImage b;
@@ -27,15 +28,18 @@ int space = 340;
 Map<Float, String> frequencyTable;
 Microphone mic;
 Song song;
+Song littleLamb;
+Song belongWithMe;
+Song foreverLikeThat;
 String micNote, songNote;
 float micFrequency, songFrequency;
-int accuracy;
+float accuracy;
 float accuracySum = 0;
 int divisor = 0;
 
 void setup() {
   size(512, 450);
-  frameRate(10);
+  frameRate(30);
   textAlign(CENTER);
   PFont candara;
   candara = createFont("Candara-48.vlw", 40);
@@ -43,6 +47,7 @@ void setup() {
   b = loadImage("Curtains img 1.jpg");
   img = loadImage(pics[currentPic]);
   frequencyTable = generateFrequencyTable();
+  loadSongs();
   createGUI();
   pause.setVisible(false);
   volume.setVisible(false);
@@ -59,15 +64,12 @@ void draw() {
       line(i, height, i, height - mic.spectrum[i] * height * 5);
     }
   
-    if (frameCount % 10 == 0) {
-      micFrequency = mic.getFrequency();
-      songFrequency = song.getFrequency();
-      micNote = mic.getClosestNote(micFrequency);
-      songNote = song.getClosestNote(songFrequency);
-      song.compare(mic, accuracySum, divisor);
-      findNote();
-    }
-  
+    micFrequency = mic.getFrequency();
+    songFrequency = song.getFrequency();
+    micNote = mic.getClosestNote(micFrequency);
+    songNote = song.getClosestNote(songFrequency);
+    song.compare(mic, accuracySum, divisor);
+    findNote();
     showNotes();
     drawLyrics(song);
   }
@@ -130,4 +132,16 @@ void changeBackground() {
 */
 float getAverageAccuracy() {
   return accuracySum / divisor;
+}
+
+/*
+* Creates soundfiles for all songs.
+*/
+void loadSongs() {
+  littleLamb = new Song(this, "Little Lamb Melody.wav", "Little Lamb Accompaniment.wav", "Little Lamb Lyrics.txt", 85);
+  littleLamb.stop();
+  belongWithMe = new Song(this, "Little Lamb Melody.wav", "Little Lamb Accompaniment.wav", "Little Lamb Lyrics.txt", 85);
+  belongWithMe.stop();
+  foreverLikeThat = new Song(this, "Little Lamb Melody.wav", "Little Lamb Accompaniment.wav", "Little Lamb Lyrics.txt", 85);
+  foreverLikeThat.stop();
 }
