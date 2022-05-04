@@ -52,6 +52,8 @@ public void startButtonClicked(GButton source, GEvent event) { //_CODE_:start:31
     pause.setText("Pause");
     movingNotes.clear();
     noteName.clear();
+    accuracySum = 0;
+    divisor = 0;
     mic = new Microphone(this);
     getLyrics(song);
 

@@ -33,9 +33,8 @@ Song belongWithMe;
 Song foreverLikeThat;
 String micNote, songNote;
 float micFrequency, songFrequency;
-float accuracy;
-float accuracySum = 0;
-int divisor = 0;
+float accuracySum;
+int divisor;
 
 void setup() {
   size(512, 450);
@@ -73,14 +72,14 @@ void draw() {
     songFrequency = song.getFrequency();
     micNote = mic.getClosestNote(micFrequency);
     songNote = song.getClosestNote(songFrequency);
-    song.compare(mic, accuracySum, divisor);
+    song.compare(mic);
     findNote();
     drawLyrics(song);
   } else if (gameState == "game over") {
       image(img2, 0, 0);
       fill(255);
       textSize(15);
-      text("Congrats! Your accuracy was: " + getAverageAccuracy(), 253, 320);
+      text("Congrats! Your accuracy was: " + round(getAverageAccuracy()) + "%", 253, 320);
   }
 }
 

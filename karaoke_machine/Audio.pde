@@ -79,7 +79,7 @@ public abstract class Audio {
   /*
   * Compares two audios and returns a float determining how similar they are.
   */
-  public void compare(Audio other, Float runningSum, Integer n) {
+  public void compare(Audio other) {
     float f1 = this.getFrequency();
     float f2 = other.getFrequency();
     int v1 = this.getClosestNoteValue(f1);
@@ -89,9 +89,9 @@ public abstract class Audio {
     
     if ((a1 = max(this.spectrum)) > 0.001 && !paused) {
       a2 = max(other.spectrum);
-      println(a1, f1, a2, f2, d);
-      runningSum += d;
-      n++;
+      println(a1, f1, a2, f2, d, accuracySum);
+      accuracySum += d;
+      divisor++;
     }
   }
 }
