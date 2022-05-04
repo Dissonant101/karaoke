@@ -11,6 +11,9 @@ public void displayMainMenu() {
   exit.setVisible(true);
   backToMenu.setVisible(false);
   volumeLabel.setVisible(false);
+  
+  fill(255);
+  textSize(40);
 }
 
 /*
@@ -27,8 +30,6 @@ public void displayKaraoke() {
   backToMenu.setVisible(false);
   volumeLabel.setVisible(true);
   
-  paused = false;
-  pause.setText("Pause");
   movingNotes.clear();
   noteName.clear();
   accuracySum = 0;
@@ -53,6 +54,8 @@ public void displayGameOver() {
   backToMenu.setVisible(true);
   volumeLabel.setVisible(false);
   
+  paused = false;
+  pause.setText("Pause");
   song.melody.cue(0);
   song.accompaniment.cue(0);
   song.stop();

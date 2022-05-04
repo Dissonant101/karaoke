@@ -56,12 +56,10 @@ void setup() {
 
 void draw() {
   if (gameState == "menu") {
-    fill(255);
-    textSize(40);
     background(mainMenuBackground);
     text("Karaoke Hero", 253, 170);
   } else if (gameState == "play") {
-    if (!paused && !song.isPlaying()) {
+    if (!paused && !song.isPlaying() && movingNotes.size() == 0) {
         displayGameOver();
     }
     
