@@ -20,7 +20,7 @@ int currentPic = 0;
 String note, previousNote;
 List<PVector> movingNotes = new ArrayList<PVector>();
 List<String> noteName = new ArrayList<String>();
-String gameState = "menu";
+String gameState;
 float vol = 1.0;
 boolean paused = false;
 String choice;
@@ -50,11 +50,7 @@ void setup() {
   frequencyTable = generateFrequencyTable();
   loadSongs();
   createGUI();
-  pause.setVisible(false);
-  volume.setVisible(false);
-  quit.setVisible(false);
-  backToMenu.setVisible(false);
-  volumeLabel.setVisible(false);
+  displayMainMenu();
 }
 
 void draw() {
@@ -64,29 +60,24 @@ void draw() {
     background(mainMenuBackground);
     text("Karaoke Hero", 253, 170);
   } else if (gameState == "play") {
-    if (!paused) {
-      changeBackground();
-      showNotes();
+    if (!paused && !song.isPlaying()) {
+        displayGameOver();
     }
-  
+    
     micFrequency = mic.getFrequency();
     songFrequency = song.getFrequency();
     micNote = mic.getClosestNote(micFrequency);
     songNote = song.getClosestNote(songFrequency);
+    
+    if (!paused) {
+      changeBackground();
+      showNotes();
+    }
+    
     song.compare(mic);
     findNote();
     drawLyrics(song);
-    
-    if (!paused && !song.isPlaying()) {
-        gameState = "game over";
-    }
   } else if (gameState == "game over") {
-      exit.setVisible(true);
-      backToMenu.setVisible(true);
-      pause.setVisible(false);
-      volume.setVisible(false);
-      quit.setVisible(false);
-      volumeLabel.setVisible(false);
       image(gameOverBackground, 0, 0);
       fill(255);
       textSize(15);
