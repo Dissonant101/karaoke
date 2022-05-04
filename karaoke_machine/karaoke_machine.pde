@@ -41,7 +41,7 @@ void setup() {
   frameRate(30);
   textAlign(CENTER);
   PFont candara;
-  candara = createFont("Candara-48.vlw", 40);
+  candara = createFont("Candara", 40);
   textFont(candara);
   b = loadImage("Curtains img 1.jpg");
   img = loadImage(pics[currentPic]);

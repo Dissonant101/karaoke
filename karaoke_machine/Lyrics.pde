@@ -30,7 +30,7 @@ void drawLyrics(Song s) {
         rect(0, height/1.5, width, height, 30);
         textSize(height/20);
         fill(255);
-        text(lyricText[i], width/2, height/1.2);
+        text(lyricText[i], width/2, height/1.15);
         textSize(height/40);
         fill(175);
         text(lyricText[i+1], width/2, height/1.1);
@@ -42,7 +42,7 @@ void drawLyrics(Song s) {
         rect(0, height/1.5, width, height, 30);
         textSize(height/20);
         fill(255);
-        text(lyricText[i], width/2, height/1.2);
+        text(lyricText[i], width/2, height/1.15);
        }
      }
    }
