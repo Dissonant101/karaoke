@@ -17,12 +17,10 @@
 public void pauseButton(GButton source, GEvent event) { //_CODE_:pause:277523:
   if (paused == true) {
     paused = false;
-    loop();
     song.start();
     pause.setText("Pause");
   } else {
     paused = true;
-    noLoop();
     song.pause();
     pause.setText("Resume");
   }

@@ -17,7 +17,7 @@ void showNotes() {
 
   for (int j = 0; j < movingNotes.size(); j++) {
     text(noteName.get(j), movingNotes.get(j).x, movingNotes.get(j).y);
-    movingNotes.get(j).x -= 2;
+      movingNotes.get(j).x -= 2;
 
     if (movingNotes.get(j).x < 0) {
       movingNotes.remove(j);
