@@ -1,7 +1,7 @@
 /*
 * Splits lyric files into two arrays; one for lyrics, one for the beat on which they should display.
 */
-void getLyrics(Song s) {
+public void getLyrics(Song s) {
   lyricText = new String[s.lyrics.length];
   lyricBeatCue = new float[s.lyrics.length];
   
@@ -17,7 +17,7 @@ void getLyrics(Song s) {
 /*
 * Displays lyrics onscreen.
 */
-void drawLyrics(Song s) {
+public void drawLyrics(Song s) {
   for(int i=0; i < lyricBeatCue.length; i++) {
     float beatValue = song.melody.position()*(s.bpm/60);
     

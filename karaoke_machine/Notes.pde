@@ -1,7 +1,7 @@
 /*
 * Finds what note is currently playing so that it can be printed on screen.
 */
-void findNote() {
+public void findNote() {
   for (int i = 0; i < 12; i++) {
     if (songNote.equals(notes[i]))
       note = notes[i];
@@ -11,7 +11,7 @@ void findNote() {
 /*
 * Shows notes on screen.
 */
-void showNotes() {
+public void showNotes() {
   textSize(15);
   fill(255);
   int[] noteHeight = {6*space/7, 11*space/14, 10*space/14, 9*space/14, 8*space/14, space/2, 6*space/14, 5*space/14, 4*space/14, 3*space/14, space/7, space/14};

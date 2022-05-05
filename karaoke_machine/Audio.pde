@@ -2,9 +2,12 @@
 * Stores the fast fourier transform of an audio input.
 */
 public abstract class Audio {
-  private final Map<String, Integer> NOTE_TO_VALUE;
-  protected float[] spectrum;
-  protected FFT fft;
+  /* A lookup table that converts a string of a musical notes into integer values. */
+  public final Map<String, Integer> NOTE_TO_VALUE;
+  /* Represents the spectrum of frequency bands. */
+  public float[] spectrum;
+  /* Contains the fast fourier transform tool from the sound library. */
+  public FFT fft;
   
   /*
   * Constructor for Audio class.
@@ -38,7 +41,7 @@ public abstract class Audio {
   }
   
   /*
-  * Returns the frequency of the note that the actual frequency is closest to.
+  * Returns the frequency of a note that the actual frequency is closest to.
   */
   public String getClosestPitch(float frequency) {
     float distance;

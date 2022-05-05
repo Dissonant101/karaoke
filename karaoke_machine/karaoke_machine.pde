@@ -83,8 +83,8 @@ void draw() {
 
 /*
 * Returns a hashmap of frequencies to the corresponding pitches.
- */
-Map<Float, String> generateFrequencyTable() {
+*/
+public Map<Float, String> generateFrequencyTable() {
   Map<Float, String> table = new HashMap<Float, String>();
   BufferedReader reader = createReader("freq_to_note.txt");
   String line;
@@ -121,9 +121,9 @@ public int argMax(float[] vals) {
 }
 
 /*
-* Determines when to change the background image.
+* Cycles the background when in the karaoke screen.
 */
-void changeBackground() {
+public void changeBackground() {
   image(karaokeBackground, 0, 0);
   int changesPerMin = round(frameRate*60/song.bpm);
 
@@ -136,14 +136,14 @@ void changeBackground() {
 /*
 * Returns the average accuracy as a float.
 */
-float getAverageAccuracy() {
+public float getAverageAccuracy() {
   return accuracySum / divisor;
 }
 
 /*
-* Creates soundfiles for all songs.
+* Initializes songs.
 */
-void loadSongs() {
+public void loadSongs() {
   littleLamb = new Song(this, "Little Lamb Melody.wav", "Little Lamb Accompaniment.wav", "Little Lamb Lyrics.txt", 85);
   littleLamb.stop();
   belongWithMe = new Song(this, "Belong With Me Melody.wav", "Belong With Me Accompaniment.wav", "Belong With Me Lyrics.txt", 130);

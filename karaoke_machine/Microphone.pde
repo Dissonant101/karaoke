@@ -1,8 +1,9 @@
 /*
-* Encapsulates the audio input from the microphone.
+* Encapsulates the audio input stream from the microphone.
 */
 public class Microphone extends Audio {
-  private AudioIn in;
+  /* Contains the audio input stream from the microphone. */
+  public AudioIn in;
   
   /*
   * Constructor for Microphone class.

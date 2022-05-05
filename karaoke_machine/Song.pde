@@ -1,11 +1,15 @@
 /*
-* Encapsulates the various files needed for a song in karaoke (accompaniment and melody).
+* Encapsulates the various files needed for a song in karaoke (accompaniment, melody, lyrics).
 */
 public class Song extends Audio {
-  private SoundFile melody;
-  private SoundFile accompaniment;
-  private String[] lyrics;
-  private float bpm;
+  /* Contains the audio stream from a melody file. */
+  public SoundFile melody;
+  /* Contains the audio stream from an accompaniment file. */
+  public SoundFile accompaniment;
+  /* Contains the lyrics of a song. */
+  public String[] lyrics;
+  /* Contains the bpm of a song. */
+  public float bpm;
   
   /*
   * Constructor for Song class.
@@ -20,7 +24,7 @@ public class Song extends Audio {
   }
   
   /*
-  * Start playing the melody and accompaniment files.
+  * Starts playing the melody and accompaniment files.
   */
   @Override
   public void start() {
@@ -38,7 +42,7 @@ public class Song extends Audio {
   }
   
   /*
-  * Stops playing the melody and accompaniment files but keeps its position.
+  * Stops playing the melody and accompaniment files but keeps its position in the song.
   */
   public void pause() {
     this.melody.pause();
